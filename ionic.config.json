@@ -1,0 +1,8 @@
+{
+  "name": "yama.ua",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "4ab8f957"
+}
