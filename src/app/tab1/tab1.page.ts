@@ -18,21 +18,21 @@ export class Tab1Page {
       height: Math.round(boundingRect.height),
       x: Math.round(boundingRect.x),
       y: Math.round(boundingRect.y),
-      latitude: -33.86,
-      longitude: 151.20,
-      zoom: 12
+      latitude: -33.87,
+      longitude: 151.21,
+      zoom: 17
     });
 
     CapacitorGoogleMaps.addListener("onMapReady", async function () {
       CapacitorGoogleMaps.addMarker({
-        latitude: -33.86,
-        longitude: 151.20,
+        latitude: -33.87,
+        longitude: 151.21,
         title: "Custom Title",
         snippet: "Custom Snippet",
       });
 
       CapacitorGoogleMaps.setMapType({
-        "type": "normal"
+        "type": "satellite"
       });
     });
   }
