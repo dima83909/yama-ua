@@ -10,34 +10,64 @@ export class Tab1Page {
   @ViewChild('map') mapView: ElementRef;
   constructor() { }
 
-  async ionViewDidEnter() {
-    const boundingRect = this.mapView.nativeElement.getBoundingClientRect() as DOMRect;
-
-    CapacitorGoogleMaps.create({
-      width: Math.round(boundingRect.width),
-      height: Math.round(boundingRect.height),
-      x: Math.round(boundingRect.x),
-      y: Math.round(boundingRect.y),
-      latitude: -33.87,
-      longitude: 151.21,
-      zoom: 17
-    });
-
-    CapacitorGoogleMaps.addListener("onMapReady", async function () {
-      CapacitorGoogleMaps.addMarker({
-        latitude: -33.87,
-        longitude: 151.21,
-        title: "Custom Title",
-        snippet: "Custom Snippet",
+  ionViewDidEnter() {
+    if (window.sessionStorage.getItem('mapCreated') === '1') {
+      CapacitorGoogleMaps.show();
+      CapacitorGoogleMaps.enableCurrentLocation({ enabled: true });
+      CapacitorGoogleMaps.settings({
+        allowScrollGesturesDuringRotateOrZoom: true,
+        compassButton: true,
+        consumesGesturesInView: true,
+        indoorPicker: true,
+        myLocationButton: true,
+        rotateGestures: true,
+        scrollGestures: true,
+        tiltGestures: true,
+        zoomGestures: true,
       });
+    } else {
+      setTimeout(() => {
+        const boundingRect = this.mapView.nativeElement.getBoundingClientRect() as DOMRect;
+        CapacitorGoogleMaps.create({
+          width: Math.round(boundingRect.width),
+          height: Math.round(boundingRect.height),
+          x: Math.round(boundingRect.x),
+          y: Math.round(boundingRect.y),
+          latitude: -33.87,
+          longitude: 151.21,
+          zoom: 17
+        }).then(map => {
+          window.sessionStorage.setItem('mapCreated', '1');
+        });
 
-      CapacitorGoogleMaps.setMapType({
-        "type": "satellite"
-      });
-    });
+        CapacitorGoogleMaps.addListener("onMapReady", async function () {
+          CapacitorGoogleMaps.addMarker({
+            latitude: -33.87,
+            longitude: 151.21,
+            title: "Custom Title",
+            snippet: "Custom Snippet",
+          });
+          CapacitorGoogleMaps.setMapType({
+            "type": "satellite"
+          });
+          CapacitorGoogleMaps.enableCurrentLocation({ enabled: true });
+          CapacitorGoogleMaps.settings({
+            allowScrollGesturesDuringRotateOrZoom: true,
+            compassButton: true,
+            consumesGesturesInView: true,
+            indoorPicker: true,
+            myLocationButton: true,
+            rotateGestures: true,
+            scrollGestures: true,
+            tiltGestures: true,
+            zoomGestures: true,
+          });
+        });
+      }, 100);
+    }
   }
 
   ionViewDidLeave() {
-    CapacitorGoogleMaps.close();
+    CapacitorGoogleMaps.hide();
   }
 }

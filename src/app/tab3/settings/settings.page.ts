@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { StatusBar, Style } from '@capacitor/status-bar';
 
 @Component({
   selector: 'app-settings',
@@ -14,5 +15,6 @@ export class SettingsPage implements OnInit {
 
   toggleDarkTheme(shouldAdd): void {
     document.body.setAttribute('color-theme', shouldAdd ? 'dark' : 'white');
+    StatusBar.setStyle({ style: shouldAdd ? Style.Dark : Style.Light });
   }
 }
