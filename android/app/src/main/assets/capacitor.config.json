@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "yama.ua",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}

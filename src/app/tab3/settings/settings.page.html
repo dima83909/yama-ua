@@ -8,5 +8,11 @@
 </ion-header>
 
 <ion-content>
-
+  <ion-item lines="full">
+    <ion-icon slot="start" name="moon"></ion-icon>
+    <ion-label>
+      Toggle Dark Theme
+    </ion-label>
+    <ion-toggle [(ngModel)]="dakrMode" (ionChange)="toggleDarkTheme($event.detail.checked)" slot="end"></ion-toggle>
+  </ion-item>
 </ion-content>
