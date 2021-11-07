@@ -16,5 +16,6 @@ export class SettingsPage implements OnInit {
   toggleDarkTheme(shouldAdd): void {
     document.body.setAttribute('color-theme', shouldAdd ? 'dark' : 'white');
     StatusBar.setStyle({ style: shouldAdd ? Style.Dark : Style.Light });
+    localStorage.setItem('darkMode', shouldAdd ? 'dark' : 'white');
   }
 }

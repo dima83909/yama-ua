@@ -5,11 +5,17 @@ project(':capacitor-android').projectDir = new File('../node_modules/@capacitor/
 include ':capacitor-community-capacitor-googlemaps-native'
 project(':capacitor-community-capacitor-googlemaps-native').projectDir = new File('../node_modules/@capacitor-community/capacitor-googlemaps-native/android')
 
+include ':capacitor-action-sheet'
+project(':capacitor-action-sheet').projectDir = new File('../node_modules/@capacitor/action-sheet/android')
+
 include ':capacitor-app'
 project(':capacitor-app').projectDir = new File('../node_modules/@capacitor/app/android')
 
 include ':capacitor-camera'
 project(':capacitor-camera').projectDir = new File('../node_modules/@capacitor/camera/android')
+
+include ':capacitor-geolocation'
+project(':capacitor-geolocation').projectDir = new File('../node_modules/@capacitor/geolocation/android')
 
 include ':capacitor-haptics'
 project(':capacitor-haptics').projectDir = new File('../node_modules/@capacitor/haptics/android')
