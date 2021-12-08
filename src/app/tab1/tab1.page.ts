@@ -2,6 +2,8 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CapacitorGoogleMaps } from '@capacitor-community/capacitor-googlemaps-native';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Geolocation } from '@capacitor/geolocation';
+import { IonRouterOutlet, ModalController } from '@ionic/angular';
+import { MarkerComponent } from './marker/marker.component';
 
 @Component({
   selector: 'app-tab1',
@@ -9,14 +11,16 @@ import { Geolocation } from '@capacitor/geolocation';
   styleUrls: [ 'tab1.page.scss' ]
 })
 export class Tab1Page {
+  markers = JSON.parse(localStorage.getItem('markers') || '[]');
   @ViewChild('map') mapView: ElementRef;
-  constructor() { }
+  constructor(
+    private modalController: ModalController,
+    private routerOutlet: IonRouterOutlet
+  ) { }
 
   ionViewDidEnter() {
     if (window.sessionStorage.getItem('mapCreated') === '1') {
-
       CapacitorGoogleMaps.show();
-
     } else {
       setTimeout(() => {
         const boundingRect = this.mapView.nativeElement.getBoundingClientRect() as DOMRect;
@@ -32,7 +36,7 @@ export class Tab1Page {
           window.sessionStorage.setItem('mapCreated', '1');
 
           CapacitorGoogleMaps.setMapType({
-            "type": "satellite"
+            "type": "normal"
           });
           CapacitorGoogleMaps.enableCurrentLocation({ enabled: true });
           CapacitorGoogleMaps.settings({
@@ -47,9 +51,25 @@ export class Tab1Page {
             zoomGestures: true,
           });
         });
+        this.markers.forEach(m => {
+          CapacitorGoogleMaps.addMarker({
+            latitude: m.latitude,
+            longitude: m.longitude,
+          });
+        });
+        CapacitorGoogleMaps.addListener('didTap', async result => {
+          alert(result);
+          CapacitorGoogleMaps.hide();
+          const modal = this.modalController.create({
+            component: MarkerComponent,
+            /* swipeToClose: true,
+            presentingElement: this.routerOutlet.nativeEl */
+          });
 
+          (await modal).present();
+        });
         this.showCurrentPosition();
-      }, 100);
+      }, 500);
     }
   }
 
@@ -76,13 +96,20 @@ export class Tab1Page {
       source: CameraSource.Prompt,
       quality: 100
     });
-    
+
     const data = await Geolocation.getCurrentPosition();
     CapacitorGoogleMaps.addMarker({
       latitude: data.coords.latitude,
       longitude: data.coords.longitude,
-    })
-    console.log(capturedPhoto);
+    }).then(result => {
+      this.markers.push({
+        name: "this is my photo",
+        latitude: data.coords.latitude,
+        longitude: data.coords.longitude,
+      });
+      localStorage.setItem('markers', JSON.stringify(this.markers));
+    });
+
   }
 
 }

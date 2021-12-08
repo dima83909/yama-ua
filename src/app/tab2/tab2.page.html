@@ -5,8 +5,9 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-card *ngFor="let post of [{},{},{},{},{},{},{},{},{}]">
-    <img src="https://img.tsn.ua/cached/082/tsn-0adb2b455a252fbeb54cd6e76bc767e2/thumbs/1036x648/20/fb/99904d99551abcb83cd17b367de1fb20.jpeg" alt="ion">
+  <ion-card *ngFor="let post of [{},{},{},{},{},{},{},{},{}]; let i = index">
+    <img *ngIf="!i" src="https://img.tsn.ua/cached/082/tsn-0adb2b455a252fbeb54cd6e76bc767e2/thumbs/1036x648/20/fb/99904d99551abcb83cd17b367de1fb20.jpeg" alt="ion">
+    <img *ngIf="i" src="https://img.tsn.ua/cached/992/tsn-ec97a3c0a2ace5bfabc1ed73666af320/thumbs/428x268/aa/62/3f761cafbf38d4039ceef844878762aa.jpg" alt="ion">
     <ion-card-header>
       <ion-card-subtitle>13:40, 05.11.21</ion-card-subtitle>
       <ion-card-title>На розвиток мережі автомобільних доріг у 2022 році заплановані кошти в обсязі 124,1 млрд грн.</ion-card-title>
